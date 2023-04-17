@@ -1,0 +1,22 @@
+Injury Mechanism	Injury Mechanism Code	Deaths	Population	Crude Rate
+"Cut/Pierce"	"GRINJ-001"	426	295594678	0.1
+"Drowning"	"GRINJ-002"	3454	295594678	1.2
+"Fall"	"GRINJ-003"	535	295594678	0.2
+"Fire/Flame"	"GRINJ-004"	1206	295594678	0.4
+"Hot object/Substance"	"GRINJ-005"	26	295594678	0.0
+"Firearm"	"GRINJ-006"	8810	295594678	3.0
+"Machinery"	"GRINJ-007"	99	295594678	0.0
+"Motor Vehicle Traffic"	"GRINJ-008"	11444	295594678	3.9
+"Other Pedal cyclist"	"GRINJ-009"	84	295594678	0.0
+"Other Pedestrian"	"GRINJ-010"	615	295594678	0.2
+"Other land transport"	"GRINJ-011"	729	295594678	0.2
+"Other transport"	"GRINJ-012"	227	295594678	0.1
+"Natural/Environmental"	"GRINJ-013"	275	295594678	0.1
+"Poisoning"	"GRINJ-015"	2493	295594678	0.8
+"Struck by or against"	"GRINJ-016"	266	295594678	0.1
+"Suffocation"	"GRINJ-017"	4859	295594678	1.6
+"Other specified, classifiable Injury"	"GRINJ-018"	666	295594678	0.2
+"Other specified, not elsewhere classified Injury"	"GRINJ-019"	300	295594678	0.1
+"Unspecified Injury"	"GRINJ-020"	1111	295594678	0.4
+"Non-Injury: Other complications of pregnancy, childbirth and the puerperium"	"GR113-107"	81	295594678	0.0
+"Non-Injury: Complications of medical and surgical care"	"GR113-135"	191	295594678	0.1
