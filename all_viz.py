@@ -143,6 +143,17 @@ def main():
     # df_us_deaths = df_us_deaths.astype({"Deaths": int, "Crude Rate": float})
     # deaths_fig = px.line(df_us_deaths, x="Years", y="Crude Rate", color="Injury Mechanism")
     # deaths_fig
+    incidents_binned = open("incidents_binned.html", 'r', encoding='utf-8')
+    source_code = incidents_binned.read() 
+    components.html(source_code, width=900, height=700)
+
+    incidents_per_year = open("incidents_per_year.html", 'r', encoding='utf-8')
+    source_code = incidents_per_year.read() 
+    components.html(source_code, width=900, height=700)
+
+    incidents = open("incidents.html", 'r', encoding='utf-8')
+    source_code = incidents.read() 
+    components.html(source_code, width=900, height=900)
 
 if __name__ == "__main__":   
     main()
