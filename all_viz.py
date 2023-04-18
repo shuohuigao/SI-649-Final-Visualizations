@@ -170,15 +170,15 @@ def main():
     with inc_tab1:
         incidents_per_year = open("incidents_per_year.html", 'r', encoding='utf-8')
         source_code = incidents_per_year.read() 
-        components.html(source_code, width=900, height=700)
+        components.html(source_code, width=1300, height=1200)
     with inc_tab2:
         incidents = open("incidents.html", 'r', encoding='utf-8')
         source_code = incidents.read() 
-        components.html(source_code, width=900, height=900)
+        components.html(source_code, width=1300, height=1200)
     with inc_tab3:
         incidents_binned = open("incidents_binned.html", 'r', encoding='utf-8')
         source_code = incidents_binned.read() 
-        components.html(source_code, width=900, height=700)
+        components.html(source_code, width=1300, height=1200)
 
 if __name__ == "__main__":   
     main()
