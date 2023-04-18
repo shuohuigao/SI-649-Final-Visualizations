@@ -164,6 +164,10 @@ def main():
     # df_us_deaths = df_us_deaths.astype({"Deaths": int, "Crude Rate": float})
     # deaths_fig = px.line(df_us_deaths, x="Years", y="Crude Rate", color="Injury Mechanism")
     # deaths_fig
+    st.header("Fatal Gun Incident on Campus (2000 - 2023)")
+    classroom_simulation = open("classroom_simulation.html", 'r', encoding='utf-8')
+    source_code = classroom_simulation.read()
+    components.html(source_code, width=1000, height=700)
 
     st.header("School Shooting Incidents")
     inc_tab1, inc_tab2, inc_tab3 = st.tabs(['School Shooting Incidents by Year (1990-2022)', 'School Shootings this Century', 'School Shooting Incidents'])
@@ -181,10 +185,7 @@ def main():
         source_code = incidents_binned.read() 
         components.html(source_code, width=1200, height=1200)
 
-    st.header("Fatal Gun Incident in Campus (2000 - 2023)")
-    classroom_simulation = open("classroom_simulation.html", 'r', encoding='utf-8')
-    source_code = classroom_simulation.read()
-    components.html(source_code, width=1200, height=1200)
+
 
 if __name__ == "__main__":   
     main()
