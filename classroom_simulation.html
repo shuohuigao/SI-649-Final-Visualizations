@@ -1,0 +1,158 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Classroom Simulation</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      #left {
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 60%;
+        background-color: white;
+      }
+
+      #blackboard {
+        /* position: absolute; */
+        margin: 0 auto;
+        top: 0;
+        height: 10%;
+        width: 40%;
+        background-image: url('https://raw.githubusercontent.com/fangzheli/CampusShootingVisualization/main/blackboard.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+      }
+
+      #classroom {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        height: 90%;
+        padding: 10px;
+        box-sizing: border-box;
+      }
+
+      #restart-btn {
+        position: absolute;
+        top: 10px;
+        /* right: 10px; */
+        padding: 10px 20px;
+        font-size: 24px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      .desk {
+        width: calc(9% - 20px);
+        height: calc(7.5% - 20px);
+        margin: 10px;
+        background-image: url('https://raw.githubusercontent.com/fangzheli/CampusShootingVisualization/main/desk.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+      }
+
+      #right {
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        width: 40%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #1a0b0b;
+      }
+
+      #right p {
+        font-size: 48px;
+        text-align: center;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="left">
+      <button id="restart-bt" onclick="restartSimulation()">Restart</button>
+      <div id="blackboard"></div>
+      <div id="classroom">
+        <script>
+            for (var i = 1; i <= 133; i++) {
+              document.write('<div class="desk"></div>');
+            }
+        </script>
+      </div>
+      <script>
+        var isDarkening = false;
+        async function darkenDesks() {
+          isDarkening = true;
+          // Read data from the CSV file
+          var csvFile = 'https://raw.githubusercontent.com/fangzheli/CampusShootingVisualization/main/data.csv'; // replace with your file name
+          var response = await fetch(csvFile);
+          var data = await response.text();
+          
+          // Split the CSV file into rows and iterate through each row
+          var rows = data.trim().split('\n');
+          var deskIndex = 0
+          var interval = 2000
+          var level = 7
+          for (var i = 0; i < rows.length; i++) {
+              // Split each row into columns and get the number of desks to darken
+              var cols = rows[i].split(',');
+              var numDesks = parseInt(cols[0]);
+              
+              // Darken the required number of desks
+              var desks = document.getElementsByClassName('desk');
+              for (var j = 0; j < numDesks; j++) {
+                  desks[deskIndex].style.filter = "grayscale(100%)";
+                  deskIndex ++;
+              }
+              
+              // Print the description to the right division
+              var description = cols[1].replace(/"/g, '');
+              var rightDiv = document.getElementById('right');
+              rightDiv.innerHTML = '<p>' + description + '</p>';
+              
+              // Wait for 3 seconds before moving to the next row
+              if (i < rows.length - 1) {
+                  await new Promise(resolve => setTimeout(resolve, interval - level * deskIndex));
+                  rightDiv.innerHTML = '';
+              }
+              if (!isDarkening) break;
+          }
+        }
+        function resetDesks() {
+          isDarkening = false;
+          var desks = document.getElementsByClassName('desk');
+          for (var i = 0; i < desks.length; i++) {
+            desks[i].style.filter = "grayscale(0%)";
+          }
+        }
+
+        function restartSimulation() {
+          resetDesks();
+          darkenDesks();
+        }
+      </script>
+    </div>
+    <div id="right">
+      <p></p>
+    </div>
+    <script>
+        // Call the function to start the simulation
+        darkenDesks();
+
+    </script>
+    
+  </body>
+</html>

@@ -181,5 +181,10 @@ def main():
         source_code = incidents_binned.read() 
         components.html(source_code, width=1200, height=1200)
 
+    st.header("Fatal Gun Incident in Campus (2000 - 2023)")
+    classroom_simulation = open("classroom_simulation.html", 'r', encoding='utf-8')
+    source_code = classroom_simulation.read()
+    components.html(source_code, width=1200, height=1200)
+
 if __name__ == "__main__":   
     main()
