@@ -7,6 +7,11 @@ from PIL import Image
 import plotly.express as px
 
 def main():
+    st.set_page_config(page_title="Gun Violence Dashboard", page_icon=":guardsman:", layout="wide")
+
+    st.title("Gun Violence Dashboard")
+
+    st.header("Gun Incidents in the United States (2013 - 2018)")
     html_temp = """<div class='tableauPlaceholder' id='viz1681572080122' style='position: relative'><noscript><a href='#'>
         <img alt='Gun Incidents in the United States 2013 - 2018 ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Gu&#47;GunViolenceintheU_S__16815277936410&#47;Map&#47;1_rss.png' style='border: none' /></a></noscript>
         <object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> 
@@ -27,6 +32,8 @@ def main():
     </script>"""
     components.html(html_temp, width=900, height=700)
 
+    st.header("Leading causes of death")
+
     df = pd.read_csv('Death-all1.csv')
 
     domain_col = ['Firearm', 'Motor Vehicle Traffic', 'Drowning', 'Fall', 'Fire/Flame',  'Other Pedestrian', 'Other land transport', 'Other specified, classifiable Injury','Poisoning', 'Suffocation', 'Unspecified Injury']
@@ -43,12 +50,16 @@ def main():
         height=500,
     )
 
-    st.altair_chart(line_chart)
+    # st.altair_chart(line_chart)
 
-    countries_chart = Image.open('countries.png')
-    st.image(countries_chart, caption='Rate of Adolescent Firearm Deaths by Country')
-    cod = Image.open('causeofdeath.png')
-    st.image(cod, caption='Cause of Death by Injury Mechanism')
+    image_tab1, image_tab2 = st.tabs(['Rate of Adolescent Firearm Deaths by Country', 'Cause of Death by Injury Mechanism'])
+
+    with image_tab1:
+        countries_chart = Image.open('countries.png')
+        st.image(countries_chart, caption='Rate of Adolescent Firearm Deaths by Country')
+    with image_tab2:
+        cod = Image.open('causeofdeath.png')
+        st.image(cod, caption='Cause of Death by Injury Mechanism')
 
     df_countries = pd.read_csv("clean_firearm_deaths_country.csv")
     countries = [
@@ -77,7 +88,7 @@ def main():
         labels={"rate": "Rate of Adolescent Firearm Deaths", "location": "country"},
         title="Rate of Adolescent Firearm Deaths (self-harm, physical violence, unintentional) by Country",
     )
-    fig
+    # fig
 
     # df1901 = pd.read_csv("1999-2001.txt", sep="\t")
     # df1901["Years"] = "1999-2001"
@@ -122,7 +133,7 @@ def main():
     # df_us_deaths.sort_values(by="Crude Rate", ascending=False, inplace=True)
     df_us_deaths.sort_values(by="Years", inplace=True)
 
-    fig = px.scatter(
+    crude_fig = px.scatter(
         df_us_deaths,
         x="Years",
         y="Crude Rate",
@@ -130,30 +141,44 @@ def main():
         title="Crude Rate of U.S. Adolescent Deaths by Cause (1999-2021)",
     )
 
-    fig.update_traces(mode="lines+markers")
-    fig.update_layout(
+    crude_fig.update_traces(mode="lines+markers")
+    crude_fig.update_layout(
         {
             "plot_bgcolor": "rgba(0, 0, 0, 0)",
             "paper_bgcolor": "rgba(0, 0, 0, 0)",
         }
     )
-    fig
+    # crude_fig
+
+    tab1, tab2, tab3 = st.tabs(['Leading Cause of Death in Teenagers', 'Adolescent Firearm Deaths by Country', 'U.S. Adolescent Deaths by Cause'])
+
+    with tab1:
+        st.altair_chart(line_chart)
+    with tab2:
+        fig
+    with tab3:
+        crude_fig
 
     # df_us_deaths = pd.read_csv("deaths_by_cause.csv")
     # df_us_deaths = df_us_deaths.astype({"Deaths": int, "Crude Rate": float})
     # deaths_fig = px.line(df_us_deaths, x="Years", y="Crude Rate", color="Injury Mechanism")
     # deaths_fig
-    incidents_binned = open("incidents_binned.html", 'r', encoding='utf-8')
-    source_code = incidents_binned.read() 
-    components.html(source_code, width=900, height=700)
 
-    incidents_per_year = open("incidents_per_year.html", 'r', encoding='utf-8')
-    source_code = incidents_per_year.read() 
-    components.html(source_code, width=900, height=700)
+    st.header("School Shooting Incidents")
+    inc_tab1, inc_tab2, inc_tab3 = st.tabs(['School Shooting Incidents by Year (1990-2022)', 'School Shootings this Century', 'School Shooting Incidents'])
 
-    incidents = open("incidents.html", 'r', encoding='utf-8')
-    source_code = incidents.read() 
-    components.html(source_code, width=900, height=900)
+    with inc_tab1:
+        incidents_per_year = open("incidents_per_year.html", 'r', encoding='utf-8')
+        source_code = incidents_per_year.read() 
+        components.html(source_code, width=900, height=700)
+    with inc_tab2:
+        incidents = open("incidents.html", 'r', encoding='utf-8')
+        source_code = incidents.read() 
+        components.html(source_code, width=900, height=900)
+    with inc_tab3:
+        incidents_binned = open("incidents_binned.html", 'r', encoding='utf-8')
+        source_code = incidents_binned.read() 
+        components.html(source_code, width=900, height=700)
 
 if __name__ == "__main__":   
     main()
