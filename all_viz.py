@@ -69,7 +69,7 @@ def main():
         "United States of America",
     ]
     df_countries = df_countries[df_countries.location.isin(countries)]
-    df_countries.sort_values(by="rate", ascending=False, inplace=True)
+    df_countries.sort_values(by="rate", inplace=True)
     fig = px.bar(
         df_countries,
         x="rate",
@@ -79,33 +79,70 @@ def main():
     )
     fig
 
-    df1901 = pd.read_csv("1999-2001.txt", sep="\t")
-    df1901["Years"] = "1999-2001"
-    df0205 = pd.read_csv("2002-2005.txt", sep="\t")
-    df0205["Years"] = "2002-2005"
-    df0609 = pd.read_csv("2006-2009.txt", sep="\t")
-    df0609["Years"] = "2006-2009"
-    df1013 = pd.read_csv("2010-2013.txt", sep="\t")
-    df1013["Years"] = "2010-2013"
-    df1417 = pd.read_csv("2014-2017.txt", sep="\t")
-    df1417["Years"] = "2014-2017"
-    df1821 = pd.read_csv("2018-2021.txt", sep="\t")
-    df1821["Years"] = "2018-2021"
+    # df1901 = pd.read_csv("1999-2001.txt", sep="\t")
+    # df1901["Years"] = "1999-2001"
+    # df0205 = pd.read_csv("2002-2005.txt", sep="\t")
+    # df0205["Years"] = "2002-2005"
+    # df0609 = pd.read_csv("2006-2009.txt", sep="\t")
+    # df0609["Years"] = "2006-2009"
+    # df1013 = pd.read_csv("2010-2013.txt", sep="\t")
+    # df1013["Years"] = "2010-2013"
+    # df1417 = pd.read_csv("2014-2017.txt", sep="\t")
+    # df1417["Years"] = "2014-2017"
+    # df1821 = pd.read_csv("2018-2021.txt", sep="\t")
+    # df1821["Years"] = "2018-2021"
 
-    finaldf = pd.concat([df1901, df0205, df0609, df1013, df1417, df1821], axis=0)
-    finaldf.drop(columns="Injury Mechanism Code", inplace=True)
-    finaldf.to_csv("deaths_by_cause.csv", index=False)
-    df_firearm = pd.read_csv("raw_deaths_by_firearm_country.csv")
-    df_firearm.drop(columns=["measure", "sex", "age"], inplace=True)
-    df_firearm = df_firearm[df_firearm.metric == "Rate"]
-    df_firearm.drop(columns=["metric"], inplace=True)
-    print(df_firearm.location.unique())
+    # finaldf = pd.concat([df1901, df0205, df0609, df1013, df1417, df1821], axis=0)
+    # finaldf.drop(columns="Injury Mechanism Code", inplace=True)
+    # finaldf.to_csv("deaths_by_cause.csv", index=False)
+    # df_firearm = pd.read_csv("raw_deaths_by_firearm_country.csv")
+    # df_firearm.drop(columns=["measure", "sex", "age"], inplace=True)
+    # df_firearm = df_firearm[df_firearm.metric == "Rate"]
+    # df_firearm.drop(columns=["metric"], inplace=True)
+    # print(df_firearm.location.unique())
     # df_firearm.to_csv("clean_firearm_deaths_country.csv", index=False)
 
     df_us_deaths = pd.read_csv("deaths_by_cause.csv")
+    causes_to_exclude = [
+        "Other specified, classifiable Injury",
+        "Other specified, not elsewhere classified Injury",
+        "Unspecified Injury",
+        "Non-Injury: Other complications of pregnancy, childbirth and the puerperium",
+        "Non-Injury: Complications of medical and surgical care",
+        "Other transport",
+        "Other land transport",
+        "Other Pedal cyclist",
+        "Other Pedestrian",
+        "Struck by or against",
+    ]
+    df_us_deaths = df_us_deaths[
+        ~df_us_deaths["Injury Mechanism"].isin(causes_to_exclude)
+    ]
     df_us_deaths = df_us_deaths.astype({"Deaths": int, "Crude Rate": float})
-    deaths_fig = px.line(df_us_deaths, x="Years", y="Crude Rate", color="Injury Mechanism")
-    deaths_fig
+    # df_us_deaths.sort_values(by="Crude Rate", ascending=False, inplace=True)
+    df_us_deaths.sort_values(by="Years", inplace=True)
 
-if __name__ == "__main__":    
+    fig = px.scatter(
+        df_us_deaths,
+        x="Years",
+        y="Crude Rate",
+        color="Injury Mechanism",
+        title="Crude Rate of U.S. Adolescent Deaths by Cause (1999-2021)",
+    )
+
+    fig.update_traces(mode="lines+markers")
+    fig.update_layout(
+        {
+            "plot_bgcolor": "rgba(0, 0, 0, 0)",
+            "paper_bgcolor": "rgba(0, 0, 0, 0)",
+        }
+    )
+    fig
+
+    # df_us_deaths = pd.read_csv("deaths_by_cause.csv")
+    # df_us_deaths = df_us_deaths.astype({"Deaths": int, "Crude Rate": float})
+    # deaths_fig = px.line(df_us_deaths, x="Years", y="Crude Rate", color="Injury Mechanism")
+    # deaths_fig
+
+if __name__ == "__main__":   
     main()
