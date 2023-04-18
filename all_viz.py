@@ -30,7 +30,7 @@ def main():
         scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    
         vizElement.parentNode.insertBefore(scriptElement, vizElement);                
     </script>"""
-    components.html(html_temp, width=900, height=700)
+    components.html(html_temp, width=1000, height=700)
 
     st.header("Leading causes of death")
 
@@ -60,6 +60,7 @@ def main():
     with image_tab2:
         cod = Image.open('causeofdeath.png')
         st.image(cod, caption='Cause of Death by Injury Mechanism')
+
 
     df_countries = pd.read_csv("clean_firearm_deaths_country.csv")
     countries = [
@@ -153,11 +154,11 @@ def main():
     tab1, tab2, tab3 = st.tabs(['Leading Cause of Death in Teenagers', 'Adolescent Firearm Deaths by Country', 'U.S. Adolescent Deaths by Cause'])
 
     with tab1:
-        st.altair_chart(line_chart)
+        st.altair_chart(line_chart, use_container_width=True)
     with tab2:
-        fig
+        st.plotly_chart(fig, use_container_width=True)
     with tab3:
-        crude_fig
+        st.plotly_chart(crude_fig, use_container_width=True)
 
     # df_us_deaths = pd.read_csv("deaths_by_cause.csv")
     # df_us_deaths = df_us_deaths.astype({"Deaths": int, "Crude Rate": float})
@@ -170,15 +171,15 @@ def main():
     with inc_tab1:
         incidents_per_year = open("incidents_per_year.html", 'r', encoding='utf-8')
         source_code = incidents_per_year.read() 
-        components.html(source_code, width=1300, height=1200)
+        components.html(source_code, width=1200, height=1200)
     with inc_tab2:
         incidents = open("incidents.html", 'r', encoding='utf-8')
         source_code = incidents.read() 
-        components.html(source_code, width=1300, height=1200)
+        components.html(source_code, width=1200, height=1200)
     with inc_tab3:
         incidents_binned = open("incidents_binned.html", 'r', encoding='utf-8')
         source_code = incidents_binned.read() 
-        components.html(source_code, width=1300, height=1200)
+        components.html(source_code, width=1200, height=1200)
 
 if __name__ == "__main__":   
     main()
