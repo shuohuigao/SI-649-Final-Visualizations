@@ -38,52 +38,52 @@ def main():
     # st.header("Leading causes of death")
 
     df = pd.read_csv("Death-all1.csv")
-    
 
+    df['Year'] = df['Year'].astype('int64')
     domain_col = [
-        "Firearm",
-        "Motor Vehicle Traffic",
-        "Drowning",
-        "Fall",
-        "Fire/Flame",
-        "Other Pedestrian",
-        "Other land transport",
-        "Other specified, classifiable Injury",
-        "Poisoning",
-        "Suffocation",
-        "Unspecified Injury",
-    ]
+            "Firearm",
+            "Motor Vehicle Traffic",
+            "Drowning",
+            "Fall",
+            "Fire/Flame",
+            "Other Pedestrian",
+            "Other land transport",
+            "Other specified, classifiable Injury",
+            "Poisoning",
+            "Suffocation",
+            "Unspecified Injury",
+        ]
     range_col = [
-        "red",
-        "lightgreen",
-        "darkblue",
-        "orange",
-        "pink",
-        "yellow",
-        "purple",
-        "lightblue",
-        "brown",
-        "grey",
-        "lightgreen",
-    ]
+            "red",
+            "lightgreen",
+            "darkblue",
+            "orange",
+            "pink",
+            "yellow",
+            "purple",
+            "lightblue",
+            "brown",
+            "grey",
+            "lightgreen",
+        ]
     line_chart = (
-        alt.Chart(df, title="Leading causes of death in adolescents")
-        .mark_line(point=True)
-        .encode(
-            y=alt.Y("Percentage", title="Percentage of all types"),
-            x=alt.X("Year:T", title="Year", axis=alt.Axis(tickCount="year")),
-            # color = 'Injury Mechanism',
-            color=alt.Color(
-                "Injury Mechanism:N",
-                scale=alt.Scale(domain=domain_col, range=range_col),
-            ),
-            # opacity = alt.Opacity('Injury Mechanism:N',scale=alt.Scale(domain=domain_col, range=range_opa)),
-            tooltip=["Percentage", "Injury Mechanism"],
-        )
-        .properties(
-            width=800,
-            height=500,
-        )
+            alt.Chart(df, title="Leading causes of death in adolescents")
+            .mark_line(point=True)
+            .encode(
+                x=alt.X("Year:O", title="Year"),
+                y=alt.Y("Percentage", title="Percentage of all types"),
+                # color = 'Injury Mechanism',
+                color=alt.Color(
+                    "Injury Mechanism:N",
+                    scale=alt.Scale(domain=domain_col, range=range_col),
+                ),
+                # opacity = alt.Opacity('Injury Mechanism:N',scale=alt.Scale(domain=domain_col, range=range_opa)),
+                tooltip=["Percentage", "Injury Mechanism"],
+            )
+            .properties(
+                width=800,
+                height=500,
+            )
     )
 
     # # st.altair_chart(line_chart)
