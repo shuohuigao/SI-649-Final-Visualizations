@@ -6,8 +6,11 @@ import altair as alt
 from PIL import Image
 import plotly.express as px
 
+
 def main():
-    st.set_page_config(page_title="Gun Violence Dashboard", page_icon=":guardsman:", layout="wide")
+    st.set_page_config(
+        page_title="Gun Violence Dashboard", page_icon=":guardsman:", layout="wide"
+    )
 
     st.title("Gun Violence Dashboard")
 
@@ -32,35 +35,66 @@ def main():
     </script>"""
     components.html(html_temp, width=1000, height=700)
 
-    st.header("Leading causes of death")
+    # st.header("Leading causes of death")
 
-    df = pd.read_csv('Death-all1.csv')
+    df = pd.read_csv("Death-all1.csv")
 
-    domain_col = ['Firearm', 'Motor Vehicle Traffic', 'Drowning', 'Fall', 'Fire/Flame',  'Other Pedestrian', 'Other land transport', 'Other specified, classifiable Injury','Poisoning', 'Suffocation', 'Unspecified Injury']
-    range_col = ['red', 'lightgreen', 'darkblue', 'orange', 'pink', 'yellow', 'purple', 'lightblue', 'brown', 'grey', 'lightgreen' ]
-    line_chart = alt.Chart(df, title = 'Leading causes of death in teenagers').mark_line(point = True).encode(
-        y = alt.Y('Percentage',title='Percentage of all types'),
-        x = alt.Y('Year',title='Year'),
-        # color = 'Injury Mechanism',
-        color = alt.Color('Injury Mechanism:N',scale=alt.Scale(domain=domain_col, range=range_col)),
-        # opacity = alt.Opacity('Injury Mechanism:N',scale=alt.Scale(domain=domain_col, range=range_opa)),
-        tooltip= ['Percentage','Injury Mechanism']
-    ).properties(
-        width=800,
-        height=500,
+    domain_col = [
+        "Firearm",
+        "Motor Vehicle Traffic",
+        "Drowning",
+        "Fall",
+        "Fire/Flame",
+        "Other Pedestrian",
+        "Other land transport",
+        "Other specified, classifiable Injury",
+        "Poisoning",
+        "Suffocation",
+        "Unspecified Injury",
+    ]
+    range_col = [
+        "red",
+        "lightgreen",
+        "darkblue",
+        "orange",
+        "pink",
+        "yellow",
+        "purple",
+        "lightblue",
+        "brown",
+        "grey",
+        "lightgreen",
+    ]
+    line_chart = (
+        alt.Chart(df, title="Leading causes of death in teenagers")
+        .mark_line(point=True)
+        .encode(
+            y=alt.Y("Percentage", title="Percentage of all types"),
+            x=alt.X("Year:T", title="Year"),
+            # color = 'Injury Mechanism',
+            color=alt.Color(
+                "Injury Mechanism:N",
+                scale=alt.Scale(domain=domain_col, range=range_col),
+            ),
+            # opacity = alt.Opacity('Injury Mechanism:N',scale=alt.Scale(domain=domain_col, range=range_opa)),
+            tooltip=["Percentage", "Injury Mechanism"],
+        )
+        .properties(
+            width=800,
+            height=500,
+        )
     )
 
-    # st.altair_chart(line_chart)
+    # # st.altair_chart(line_chart)
 
-    image_tab1, image_tab2 = st.tabs(['Rate of Adolescent Firearm Deaths by Country', 'Cause of Death by Injury Mechanism'])
+    # image_tab1, image_tab2 = st.tabs(['Rate of Adolescent Firearm Deaths by Country', 'Cause of Death by Injury Mechanism'])
 
-    with image_tab1:
-        countries_chart = Image.open('countries.png')
-        st.image(countries_chart, caption='Rate of Adolescent Firearm Deaths by Country')
-    with image_tab2:
-        cod = Image.open('causeofdeath.png')
-        st.image(cod, caption='Cause of Death by Injury Mechanism')
-
+    # with image_tab1:
+    #     countries_chart = Image.open('countries.png')
+    #     st.image(countries_chart, caption='Rate of Adolescent Firearm Deaths by Country')
+    # with image_tab2:
+    #     cod = Image.open('causeofdeath.png')
+    #     st.image(cod, caption='Cause of Death by Injury Mechanism')
 
     df_countries = pd.read_csv("clean_firearm_deaths_country.csv")
     countries = [
@@ -86,8 +120,14 @@ def main():
         df_countries,
         x="rate",
         y="location",
-        labels={"rate": "Rate of Adolescent Firearm Deaths", "location": "country"},
+        labels={"rate": "Rate of Adolescent Firearm Deaths", "location": "Country"},
         title="Rate of Adolescent Firearm Deaths (self-harm, physical violence, unintentional) by Country",
+    )
+    fig.update_layout(
+        {
+            "plot_bgcolor": "rgba(0, 0, 0, 0)",
+            "paper_bgcolor": "rgba(0, 0, 0, 0)",
+        }
     )
     # fig
 
@@ -134,58 +174,69 @@ def main():
     # df_us_deaths.sort_values(by="Crude Rate", ascending=False, inplace=True)
     df_us_deaths.sort_values(by="Years", inplace=True)
 
-    crude_fig = px.scatter(
-        df_us_deaths,
-        x="Years",
-        y="Crude Rate",
-        color="Injury Mechanism",
-        title="Crude Rate of U.S. Adolescent Deaths by Cause (1999-2021)",
-    )
+    # crude_fig = px.scatter(
+    #     df_us_deaths,
+    #     x="Years",
+    #     y="Crude Rate",
+    #     color="Injury Mechanism",
+    #     title="Crude Rate of U.S. Adolescent Deaths by Cause (1999-2021)",
+    # )
 
-    crude_fig.update_traces(mode="lines+markers")
-    crude_fig.update_layout(
-        {
-            "plot_bgcolor": "rgba(0, 0, 0, 0)",
-            "paper_bgcolor": "rgba(0, 0, 0, 0)",
-        }
-    )
+    # crude_fig.update_traces(mode="lines+markers")
+    # crude_fig.update_layout(
+    #     {
+    #         "plot_bgcolor": "rgba(0, 0, 0, 0)",
+    #         "paper_bgcolor": "rgba(0, 0, 0, 0)",
+    #     }
+    # )
     # crude_fig
 
-    tab1, tab2, tab3 = st.tabs(['Leading Cause of Death in Teenagers', 'Adolescent Firearm Deaths by Country', 'U.S. Adolescent Deaths by Cause'])
+    tab1, tab2 = st.tabs(
+        [
+            "Leading Cause of Death in Adolescents",
+            "Adolescent Firearm Deaths by Country",
+        ]
+    )
+    # tab1, tab2, tab3 = st.tabs(['Leading Cause of Death in Teenagers', 'Adolescent Firearm Deaths by Country', 'U.S. Adolescent Deaths by Cause'])
 
     with tab1:
         st.altair_chart(line_chart, use_container_width=True)
     with tab2:
         st.plotly_chart(fig, use_container_width=True)
-    with tab3:
-        st.plotly_chart(crude_fig, use_container_width=True)
+    # with tab3:
+    #     st.plotly_chart(crude_fig, use_container_width=True)
 
     # df_us_deaths = pd.read_csv("deaths_by_cause.csv")
     # df_us_deaths = df_us_deaths.astype({"Deaths": int, "Crude Rate": float})
     # deaths_fig = px.line(df_us_deaths, x="Years", y="Crude Rate", color="Injury Mechanism")
     # deaths_fig
     st.header("Fatal Gun Incidents on Campus (2000 - 2023)")
-    classroom_simulation = open("classroom_simulation.html", 'r', encoding='utf-8')
+    classroom_simulation = open("classroom_simulation.html", "r", encoding="utf-8")
     source_code = classroom_simulation.read()
     components.html(source_code, width=1000, height=700)
 
     st.header("School Shooting Incidents")
-    inc_tab1, inc_tab2, inc_tab3 = st.tabs(['School Shooting Incidents by Year (1990-2022)', 'School Shootings this Century', 'School Shooting Incidents'])
+    inc_tab1, inc_tab2, inc_tab3 = st.tabs(
+        [
+            "School Shooting Incidents by Year (1990-2022)",
+            "School Shootings this Century",
+            "School Shooting Incidents",
+        ]
+    )
 
     with inc_tab1:
-        incidents_per_year = open("incidents_per_year.html", 'r', encoding='utf-8')
-        source_code = incidents_per_year.read() 
+        incidents_per_year = open("incidents_per_year.html", "r", encoding="utf-8")
+        source_code = incidents_per_year.read()
         components.html(source_code, width=1200, height=1200)
     with inc_tab2:
-        incidents = open("incidents.html", 'r', encoding='utf-8')
-        source_code = incidents.read() 
+        incidents = open("incidents.html", "r", encoding="utf-8")
+        source_code = incidents.read()
         components.html(source_code, width=1200, height=1200)
     with inc_tab3:
-        incidents_binned = open("incidents_binned.html", 'r', encoding='utf-8')
-        source_code = incidents_binned.read() 
+        incidents_binned = open("incidents_binned.html", "r", encoding="utf-8")
+        source_code = incidents_binned.read()
         components.html(source_code, width=1200, height=1200)
 
 
-
-if __name__ == "__main__":   
+if __name__ == "__main__":
     main()
