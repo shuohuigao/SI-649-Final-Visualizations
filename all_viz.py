@@ -71,7 +71,7 @@ def main():
         .mark_line(point=True)
         .encode(
             y=alt.Y("Percentage", title="Percentage of all types"),
-            x=alt.X("Year:T", title="Year", axis=alt.Axis(format='%Y')),
+            x=alt.X("Year:T", title="Year", axis=alt.Axis(tickCount="year")),
             # color = 'Injury Mechanism',
             color=alt.Color(
                 "Injury Mechanism:N",
