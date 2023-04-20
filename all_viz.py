@@ -38,6 +38,7 @@ def main():
     # st.header("Leading causes of death")
 
     df = pd.read_csv("Death-all1.csv")
+    
 
     domain_col = [
         "Firearm",
@@ -66,11 +67,11 @@ def main():
         "lightgreen",
     ]
     line_chart = (
-        alt.Chart(df, title="Leading causes of death in teenagers")
+        alt.Chart(df, title="Leading causes of death in adolescents")
         .mark_line(point=True)
         .encode(
             y=alt.Y("Percentage", title="Percentage of all types"),
-            x=alt.X("Year:T", title="Year"),
+            x=alt.X("Year:T", title="Year", axis=alt.Axis(format='%Y')),
             # color = 'Injury Mechanism',
             color=alt.Color(
                 "Injury Mechanism:N",
