@@ -211,7 +211,7 @@ def main():
     # df_us_deaths = df_us_deaths.astype({"Deaths": int, "Crude Rate": float})
     # deaths_fig = px.line(df_us_deaths, x="Years", y="Crude Rate", color="Injury Mechanism")
     # deaths_fig
-    st.header("Fatal Gun Incidents on Campus (2000 - 2023)")
+    st.header("Fatal Gun Incidents on US School Campus (2000 - 2023)")
     classroom_simulation = open("classroom_simulation.html", "r", encoding="utf-8")
     source_code = classroom_simulation.read()
     components.html(source_code, width=1000, height=700)
