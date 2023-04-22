@@ -9,10 +9,16 @@ import plotly.express as px
 
 def main():
     st.set_page_config(
-        page_title="Gun Violence Dashboard", page_icon=":guardsman:", layout="wide"
+        page_title="Gun Violence Facing Our Youth", page_icon="chart_with_upwards_trend", layout="wide"
     )
 
-    st.title("Gun Violence Dashboard")
+    st.title("Gun Violence Facing Our Youth")
+
+    
+    # Add scrolling text on the left side
+    # with st.sidebar:
+    #     st.markdown("<h1 style='text-align: left; color: white;'>Scrolling Text</h1>", unsafe_allow_html=True)
+    #     st.markdown("<h1 style='text-align: left; color: white;'>Scrolling Text</h1>", unsafe_allow_html=True)
 
     st.header("Gun Incidents in the United States (2013 - 2018)")
     html_temp = """<div class='tableauPlaceholder' id='viz1681572080122' style='position: relative'><noscript><a href='#'>
@@ -33,7 +39,7 @@ def main():
         scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    
         vizElement.parentNode.insertBefore(scriptElement, vizElement);                
     </script>"""
-    components.html(html_temp, width=1000, height=700)
+    components.html(html_temp, width=1000, height=800)
 
     # st.header("Leading causes of death")
 
