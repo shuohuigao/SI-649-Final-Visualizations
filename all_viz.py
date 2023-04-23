@@ -197,7 +197,8 @@ def main():
         </script>"""
         components.html(html_temp, width=900, height=600)
     
-    st.markdown("")
+    st.header("Action must be taken")
+    st.markdown("Gun violence is one of the most pressing issues in this country and it shows no signs of slowing down. Whether it is through gun legislation, community outreach, increased mental health resources, or any other potential solution, we can no longer stand by and do nothing. Action needs to be taken so that we can secure a safer future for our children.")
 
 if __name__ == "__main__":
     main()
