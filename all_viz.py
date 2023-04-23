@@ -78,10 +78,20 @@ def main():
                     scale=alt.Scale(domain=domain_col, range=range_col),
                 ),
                 tooltip=["Percentage", "Injury Mechanism"],
-            )
-            .properties(
+            ).properties(
                 width=800,
                 height=500,
+            ).configure(
+                background='#FFFFFF'
+            ).configure_title(
+                color='black'
+            ).configure_axis(
+                labelColor='black',
+                titleColor='black',
+                gridColor='lightgray',
+            ).configure_legend(
+                labelColor='black',
+                titleColor='black'
             )
     )
 
@@ -105,19 +115,40 @@ def main():
     ]
     df_countries = df_countries[df_countries.location.isin(countries)]
     df_countries.sort_values(by="rate", inplace=True)
-    fig = px.bar(
-        df_countries,
-        x="rate",
-        y="location",
-        labels={"rate": "Rate of Adolescent Firearm Deaths", "location": "Country"},
-        title="Rate of Adolescent Firearm Deaths (self-harm, physical violence, unintentional) by Country",
+    fig = (
+            alt.Chart(df_countries, 
+                      title="Rate of Adolescent Firearm Deaths (self-harm, physical violence, unintentional) by Country")
+            .mark_bar()
+            .encode(
+                x=alt.X("rate", title="Rate of Adolescent Firearm Deaths"),
+                y=alt.Y("location", title="Country",sort=alt.EncodingSortField('rate', order='descending')),
+                tooltip=["rate", "location"],
+            ).configure(
+                background='#FFFFFF'
+            ).configure_title(
+                color='black'
+            ).configure_axis(
+                labelColor='black',
+                titleColor='black',
+                gridColor='lightgray',
+            ).configure_legend(
+                labelColor='black',
+                titleColor='black'
+            )
     )
-    fig.update_layout(
-        {
-            "plot_bgcolor": "rgba(0, 0, 0, 0)",
-            "paper_bgcolor": "rgba(0, 0, 0, 0)",
-        }
-    )
+#     fig = px.bar(
+#         df_countries,
+#         x="rate",
+#         y="location",
+#         labels={"rate": "Rate of Adolescent Firearm Deaths", "location": "Country"},
+#         title="Rate of Adolescent Firearm Deaths (self-harm, physical violence, unintentional) by Country",
+#     )
+#     fig.update_layout(
+#         {
+#             "plot_bgcolor": "rgba(0, 0, 0, 0)",
+#             "paper_bgcolor": "rgba(0, 0, 0, 0)",
+#         }
+#     )
 
     df_us_deaths = pd.read_csv("deaths_by_cause.csv")
     causes_to_exclude = [
@@ -153,7 +184,7 @@ def main():
         st.header("A uniquely American problem")
         st.markdown("The rate of adolescent firearm deaths in the United States is higher than any other country in the world by at least 6 times.")
     with f:
-        st.plotly_chart(fig, use_container_width=True)
+        st.altair_chart(fig, use_container_width=True)
 
     # a, b = st.columns([0.6, 1.2])
 
