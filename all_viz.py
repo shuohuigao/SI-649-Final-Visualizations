@@ -194,7 +194,7 @@ def main():
     with h:
         incidents_per_year = open("incidents_per_year.html", "r", encoding="utf-8")
         source_code = incidents_per_year.read()
-        components.html(source_code, width=950, height=500)
+        components.html(source_code, width=900, height=500)
     
     with i:
         st.header("School Shootings this Century")
@@ -202,7 +202,7 @@ def main():
     with j:
         incidents = open("incidents.html", "r", encoding="utf-8")
         source_code = incidents.read()
-        components.html(source_code, width=950, height=500)
+        components.html(source_code, width=900, height=500)
     
     with k:
         st.header("Fatalities in School Shootings (1970 - 2022)")
@@ -210,7 +210,7 @@ def main():
     with l:
         incidents_binned = open("incidents_binned.html", "r", encoding="utf-8")
         source_code = incidents_binned.read()
-        components.html(source_code, width=950, height=500)
+        components.html(source_code, width=900, height=500)
 
     # inc_tab1, inc_tab2, inc_tab3 = st.tabs(
     #     [
