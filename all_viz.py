@@ -38,6 +38,8 @@ def main():
     df = pd.read_csv("Death-all1.csv")
 
     df['Year'] = df['Year'].astype('int64')
+    df['Percentage'] = df['Percentage'].round(3)
+    df['Percentage'] = df['Percentage']*100
     domain_col = [
             "Firearm",
             "Motor Vehicle Traffic",
@@ -111,6 +113,8 @@ def main():
         "United States of America",
     ]
     df_countries = df_countries[df_countries.location.isin(countries)]
+    df_countries.replace({'United States of America': 'USA'}, regex=True, inplace=True)
+    df_countries['rate'] = df_countries['rate'].round(3)
     df_countries.sort_values(by="rate", inplace=True)
     fig = (
             alt.Chart(df_countries, 
