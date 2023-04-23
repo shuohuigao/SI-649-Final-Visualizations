@@ -122,6 +122,7 @@ def main():
             .encode(
                 x=alt.X("sum(rate)", title="Percent of Adolescents Dying due to Firearms"),
                 y=alt.Y("location", title="Country",sort='-x'),
+                color=alt.value('red'),
                 tooltip=["rate", "location"],
             ).transform_filter(
                 (alt.datum.year == 2019)
