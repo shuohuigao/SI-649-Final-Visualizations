@@ -115,15 +115,16 @@ def main():
     df_countries = df_countries[df_countries.location.isin(countries)]
     df_countries.replace({'United States of America': 'USA'}, regex=True, inplace=True)
     df_countries['rate'] = df_countries['rate'].round(3)
-    df_countries.sort_values(by="rate", inplace=True)
     fig = (
             alt.Chart(df_countries, 
-                      title="Rate of Adolescent Firearm Deaths (self-harm, physical violence, unintentional) by Country")
+                      title="Percent of Adolescents Dying due to Firearms (self-harm, physical violence, unintentional) by Country for 2019")
             .mark_bar()
             .encode(
-                x=alt.X("rate", title="Rate of Adolescent Firearm Deaths"),
-                y=alt.Y("location", title="Country",sort=alt.EncodingSortField('rate', order='descending')),
+                x=alt.X("sum(rate)", title="Percent of Adolescents Dying due to Firearms"),
+                y=alt.Y("location", title="Country",sort='-x'),
                 tooltip=["rate", "location"],
+            ).transform_filter(
+                (alt.datum.year == 2019)
             ).configure(
                 background='#FFFFFF'
             ).configure_title(
