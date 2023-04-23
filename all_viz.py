@@ -87,7 +87,7 @@ def main():
                 width=800,
                 height=500,
             )
-    )
+    ).configure(background='#D9E9F0')
 
     df_countries = pd.read_csv("clean_firearm_deaths_country.csv")
     countries = [
