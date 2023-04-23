@@ -6,7 +6,6 @@ import altair as alt
 from PIL import Image
 import plotly.express as px
 
-
 def main():
     st.set_page_config(
         page_title="Gun Violence Facing Our Youth", page_icon="chart_with_upwards_trend", layout="wide"
@@ -15,8 +14,6 @@ def main():
     st.title("Gun Violence Facing Our Youth")
     st.markdown("Gun violence is a pertinent issue in today’s America. The use of firearms to commit horrific acts of violence has left devastating impacts on individuals, families, and communities. The prevalence of mass shootings in America has become so extreme that they often just blend into the background of daily news headlines. The regularity of mass shootings also underscores the need to understand and address the root causes of this violence, including access to firearms, mental health, and societal factors such as income inequality and social isolations. This data journalism article presents a narrative, accompanied by visualizations, to highlight these issues.")
     g, h = st.columns([0.6, 1.2])
-    i, j = st.columns([0.6, 1.2])
-    k, l = st.columns([0.6, 1.2])
 
     with g:
         st.header("Schools have become a common site for gun violence")
@@ -140,19 +137,6 @@ def main():
                 titleColor='black'
             )
     )
-#     fig = px.bar(
-#         df_countries,
-#         x="rate",
-#         y="location",
-#         labels={"rate": "Rate of Adolescent Firearm Deaths", "location": "Country"},
-#         title="Rate of Adolescent Firearm Deaths (self-harm, physical violence, unintentional) by Country",
-#     )
-#     fig.update_layout(
-#         {
-#             "plot_bgcolor": "rgba(0, 0, 0, 0)",
-#             "paper_bgcolor": "rgba(0, 0, 0, 0)",
-#         }
-#     )
 
     df_us_deaths = pd.read_csv("deaths_by_cause.csv")
     causes_to_exclude = [
@@ -190,33 +174,6 @@ def main():
     with f:
         st.altair_chart(fig, use_container_width=True)
 
-    # a, b = st.columns([0.6, 1.2])
-
-    # with a:
-    #     st.header("Fatal Gun Incidents on US School Campus (2000 - 2023)")
-    #     st.markdown("This visualization was created using data provided by the CHDS. Instead of using data as a chart/table, an animation is made to embed both the number of casualties and description of the incidents to show how these numbers are kids’ lives by illustrating them in a classroom setting. The animation is made by Javascript. And the duration of each incident will be shorter and shorter to remind us how urgent the fatal gun incidents are happening among US school campuses.")
-    # with b:
-    #     classroom_simulation = open("classroom_simulation.html", "r", encoding="utf-8")
-    #     source_code = classroom_simulation.read()
-    #     components.html(source_code, width=900, height=700)
-
-    
-    # with i:
-    #     st.header("School Shootings this Century")
-    #     st.markdown("This visualization was created using data scraped from Wikipedia. This plot combines deaths and injuries to visualize the magnitude of different school shootings. It’s animated temporarily to give the user a ‘real time’ feel of these events occurring. A death and injury counter was added to the top left of the chart to display the overall impact school shootings had this century. Tooltips are included which gives the user more details about a specific incident (summary, location, etc.). Each incident is colored red to fit with the theme of gun violence.")
-    # with j:
-    #     incidents = open("incidents.html", "r", encoding="utf-8")
-    #     source_code = incidents.read()
-    #     components.html(source_code, width=900, height=500)
-    
-    # with k:
-    #     st.header("Fatalities in School Shootings (1970 - 2022)")
-    #     st.markdown("This visualization was created using data provided by the CHDS. Instead of visualizing the number of deaths as a simple line chart, we decided to switch to a stacked bar chart where the area of each rectangle corresponds to the number of fatalities for one specific incident. Initially, the bar chart was monochromatic and unsorted. Incidents with a large number of fatalities were moved to the top and colored red to stand out. The incident at Sandy Hook Elementary School has its own annotation since it was one of the first mass school shootings which resulted in a large number of deaths. Tooltips were added to specify specific schools and fatality counts.")
-    # with l:
-    #     incidents_binned = open("incidents_binned.html", "r", encoding="utf-8")
-    #     source_code = incidents_binned.read()
-    #     components.html(source_code, width=900, height=500)
-
     col1, col2 = st.columns([0.6, 1.2])
 
     with col1:
@@ -243,18 +200,8 @@ def main():
             vizElement.parentNode.insertBefore(scriptElement, vizElement);                
         </script>"""
         components.html(html_temp, width=900, height=600)
-
-    # tab1, tab2 = st.tabs(
-    #     [
-    #         "Leading Cause of Death in Adolescents",
-    #         "Adolescent Firearm Deaths by Country",
-    #     ]
-    # )
-
-    # with tab1:
-    #     st.altair_chart(line_chart, use_container_width=True)
-    # with tab2:
-    #     st.plotly_chart(fig, use_container_width=True)
+    
+    st.markdown("")
 
 if __name__ == "__main__":
     main()
