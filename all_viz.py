@@ -80,17 +80,17 @@ def main():
             ).properties(
                 width=800,
                 height=500,
-            ).configure(
-                background='#FFFFFF'
-            ).configure_title(
-                color='black'
-            ).configure_axis(
-                labelColor='black',
-                titleColor='black',
-                gridColor='lightgray',
-            ).configure_legend(
-                labelColor='black',
-                titleColor='black'
+#             ).configure(
+#                 background='#FFFFFF'
+#             ).configure_title(
+#                 color='black'
+#             ).configure_axis(
+#                 labelColor='black',
+#                 titleColor='black',
+#                 gridColor='lightgray',
+#             ).configure_legend(
+#                 labelColor='black',
+#                 titleColor='black'
             )
     )
 
@@ -126,17 +126,17 @@ def main():
                 tooltip=["rate", "location"],
             ).transform_filter(
                 (alt.datum.year == 2019)
-            ).configure(
-                background='#FFFFFF'
-            ).configure_title(
-                color='black'
-            ).configure_axis(
-                labelColor='black',
-                titleColor='black',
-                gridColor='lightgray',
-            ).configure_legend(
-                labelColor='black',
-                titleColor='black'
+#             ).configure(
+#                 background='#FFFFFF'
+#             ).configure_title(
+#                 color='black'
+#             ).configure_axis(
+#                 labelColor='black',
+#                 titleColor='black',
+#                 gridColor='lightgray',
+#             ).configure_legend(
+#                 labelColor='black',
+#                 titleColor='black'
             )
     )
 
